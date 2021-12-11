@@ -1,0 +1,107 @@
+# Byte-compiled / optimized / DLL files
+ML-Model/__pycache__/
+ML-Model/*.py[cod]
+ML-Model/*$py.class
+
+ML-Model/training_dataset
+ML-Model/inception
+ML-Model/tf_files
+ML-Model/input
+ML-Model/result.xlsx
+
+# C extensions
+ML-Model/*.so
+
+# Distribution / packaging
+ML-Model/.Python
+ML-Model/env/
+ML-Model/build/
+ML-Model/develop-eggs/
+ML-Model/dist/
+ML-Model/downloads/
+ML-Model/eggs/
+ML-Model/.eggs/
+ML-Model/lib/
+ML-Model/lib64/
+ML-Model/parts/
+ML-Model/sdist/
+ML-Model/var/
+ML-Model/wheels/
+ML-Model/*.egg-info/
+ML-Model/.installed.cfg
+ML-Model/*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+ML-Model/*.manifest
+ML-Model/*.spec
+
+# Installer logs
+ML-Model/pip-log.txt
+ML-Model/pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+ML-Model/htmlcov/
+ML-Model/.tox/
+ML-Model/.coverage
+ML-Model/.coverage.*
+ML-Model/.cache
+ML-Model/nosetests.xml
+ML-Model/coverage.xml
+ML-Model/*.cover
+ML-Model/.hypothesis/
+
+# Translations
+ML-Model/*.mo
+ML-Model/*.pot
+
+# Django stuff:
+ML-Model/*.log
+ML-Model/local_settings.py
+
+# Flask stuff:
+ML-Model/instance/
+ML-Model/.webassets-cache
+
+# Scrapy stuff:
+ML-Model/.scrapy
+
+# Sphinx documentation
+ML-Model/docs/_build/
+
+# PyBuilder
+ML-Model/target/
+
+# Jupyter Notebook
+ML-Model/.ipynb_checkpoints
+
+# pyenv
+ML-Model/.python-version
+
+# celery beat schedule file
+ML-Model/celerybeat-schedule
+
+# SageMath parsed files
+ML-Model/*.sage.py
+
+# dotenv
+ML-Model/.env
+
+# virtualenv
+ML-Model/.venv
+ML-Model/venv/
+ML-Model/ENV/
+
+# Spyder project settings
+ML-Model/.spyderproject
+ML-Model/.spyproject
+
+# Rope project settings
+ML-Model/.ropeproject
+
+# mkdocs documentation
+ML-Model//site
+
+# mypy
+ML-Model/.mypy_cache/
