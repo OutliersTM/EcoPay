@@ -6,7 +6,8 @@ const main = {
   secondaryColor: "rgb(255,0,0)",
   background: "rgb(255, 255, 255)",
   overlayBackground: "rgb(211, 211, 211)",
-  overlayDetail: "rgb(169,169,169)"
+  overlayDetail: "rgb(169,169,169)",
+  cardBackground: "#eaeaea",
 };
 
 const dark = {
@@ -17,12 +18,13 @@ const dark = {
   secondaryColor: "rgb(255,0,0)",
   background: "rgb(40, 40, 40)",
   overlayBackground: "rgb(40, 40, 40)",
-  overlayDetail: "rgb(68,68,68)"
+  overlayDetail: "rgb(68,68,68)",
+  cardBackground: "#444444",
 };
 
 const colors = {
   main: main,
-  dark: dark
+  dark: dark,
 };
 
 export default colors;

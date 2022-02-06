@@ -1,10 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
-import { P, H1, Button, Input, Form, BodyWrapper } from "../components";
+import { P, H1, Button, Input, Form, BodyWrapper, H2 } from "../components";
 import { UserContext } from "../contexts/userContext";
 import { ToastContext } from "../contexts/toastContext";
 import firebase from "../firebase.js";
 import "firebase/firestore";
-
+import ButtonWithLoadState from "../components/Button";
+import Card from "../components/Card";
+import plastic from "../themes/icons/plastic_480.png";
+import metal from "../themes/icons/metal_400px.png";
+import cardboard from "../themes/icons/cardboard_box_480px.png";
+import glass from "../themes/icons/fragile_480px.png";
+import Flexrow from "../components/Flexrow";
+import Grid from "../components/Grid";
+import trash from "../themes/icons/trash_480px.png";
+import ButtonOutlined from "../components/ButtonOutlined";
 const Dashboard = () => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -24,28 +33,28 @@ const Dashboard = () => {
   }, []);
 
   const requestNotifications = () => {
-    Notification.requestPermission().then(permission => {
+    Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
         const messaging = firebase.messaging();
         messaging
           .getToken()
-          .then(currentToken => {
+          .then((currentToken) => {
             db.collection("users")
               .doc(firebase.auth().currentUser.uid)
               .set({ pushTokenWeb: currentToken }, { merge: true })
               .then(() => {
                 sendMessage("Notifications activated!");
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           })
-          .catch(err => {
+          .catch((err) => {
             console.log("An error occurred while retrieving token.", err);
           });
       }
     });
   };
 
-  const onClickSubmit = e => {
+  const onClickSubmit = (e) => {
     e.preventDefault();
     if (firstName && lastName) {
       db.collection("users")
@@ -53,7 +62,7 @@ const Dashboard = () => {
         .set(
           {
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
           },
           { merge: true }
         )
@@ -62,8 +71,8 @@ const Dashboard = () => {
             type: "updateProfile",
             payload: {
               firstName: firstName,
-              lastName: lastName
-            }
+              lastName: lastName,
+            },
           });
           setMoreInfoComplete(true);
           sendMessage("Welcome!");
@@ -87,7 +96,7 @@ const Dashboard = () => {
         <Form>
           <div>
             <Input
-              onChange={e => setFirstName(e.target.value)}
+              onChange={(e) => setFirstName(e.target.value)}
               name="firstName"
               placeholder="First name"
               autoComplete="given-name"
@@ -95,13 +104,13 @@ const Dashboard = () => {
           </div>
           <div>
             <Input
-              onChange={e => setLastName(e.target.value)}
+              onChange={(e) => setLastName(e.target.value)}
               name="lastName"
               placeholder="Last name"
               autoComplete="family-name"
             />
           </div>
-          <Button onClick={e => onClickSubmit(e)}>Submit</Button>
+          <Button onClick={(e) => onClickSubmit(e)}>Submit</Button>
         </Form>
       </BodyWrapper>
     );
@@ -111,49 +120,70 @@ const Dashboard = () => {
     return (
       <BodyWrapper>
         <H1>Dashboard</H1>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features.
-        </P>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features. So this is your dashboard. Maybe you'll put a few graphs
-          here, you've always wanted to try out D3. Maybe a news feed, or
-          updates on new features. So this is your dashboard. Maybe you'll put a
-          few graphs here, you've always wanted to try out D3. Maybe a news
-          feed, or updates on new features.
-        </P>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features.
-        </P>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features. So this is your dashboard. Maybe you'll put a few graphs
-          here, you've always wanted to try out D3. Maybe a news feed, or
-          updates on new features.
-        </P>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features.
-        </P>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features. So this is your dashboard. Maybe you'll put a few graphs
-          here, you've always wanted to try out D3. Maybe a news feed, or
-          updates on new features.
-        </P>
-        <P>
-          So this is your dashboard. Maybe you'll put a few graphs here, you've
-          always wanted to try out D3. Maybe a news feed, or updates on new
-          features.
-        </P>
+        <H2>Wallet : ₹1550</H2>
+        <H2>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <strong>Categories</strong>
+            <ButtonWithLoadState>Withdraw From Wallet</ButtonWithLoadState>
+          </div>
+        </H2>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <ButtonOutlined>Daily</ButtonOutlined>
+          <ButtonOutlined>Weekly</ButtonOutlined>
+          <ButtonOutlined>Monthly</ButtonOutlined>
+        </div>
+        <br />
+        <br />
+        <Grid>
+          <Card>
+            <img src={plastic} width={"55%"} height={"auto"} />
+            <Flexrow>
+              <H2>Plastic</H2>
+              <H2>₹200</H2>
+            </Flexrow>
+          </Card>
+          <Card>
+            <img src={metal} width={"55%"} height={"auto"} />
+            <Flexrow>
+              <H2>Metal</H2>
+              <H2>₹700</H2>
+            </Flexrow>
+          </Card>
+          <Card>
+            <img src={cardboard} width={"55%"} height={"auto"} />
+            <Flexrow>
+              <H2>Cardboard</H2>
+              <H2>₹100</H2>
+            </Flexrow>
+          </Card>
+          <Card>
+            <img src={glass} width={"55%"} height={"auto"} />
+            <Flexrow>
+              <H2>Glass</H2>
+              <H2>₹100</H2>
+            </Flexrow>
+          </Card>
+          <Card>
+            <img src={trash} width={"55%"} height={"auto"} />
+            <Flexrow>
+              <H2>Trash</H2>
+              <H2>₹450</H2>
+            </Flexrow>
+          </Card>
+        </Grid>
       </BodyWrapper>
     );
   };

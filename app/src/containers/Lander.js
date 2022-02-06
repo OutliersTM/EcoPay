@@ -10,11 +10,7 @@ const Lander = (props) => {
   return (
     <BodyWrapper>
       <H1>EcoPay</H1>
-      <H2>
-        A fully-featured single-page app template, hosted and running in
-        minutes. Based on Create-React-App and Firebase. Written with
-        React-Hooks.
-      </H2>
+      <H2>Hi there! 👋</H2>
       <P>
         <li>
           Modern authentication and onboarding UI flows have already been built
