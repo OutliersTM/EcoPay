@@ -1,8 +1,4 @@
-## A fully-featured single-page app template, hosted and running in minutes. Based on Create-React-App and Firebase. Written with React-Hooks.
-
-**Live demo at: (https://react-firebase-essentials.com)**
-
-This is a full application template intended to provide the basic features that most online products or services need to get started, so that you can get straight into building out the important parts of your MVP without getting bogged down with the boring tasks that you've already done for a million apps before.
+## A fully-featured single-page app for EcoPay
 
 **Features:**
 
