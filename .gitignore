@@ -105,3 +105,35 @@ ML-Model//site
 
 # mypy
 ML-Model/.mypy_cache/
+
+# web app stuff
+# dependencies
+WebApp/node_modules
+
+# testing
+WebApp/coverage
+
+# production
+WebApp/build
+
+# misc
+WebApp/.DS_Store
+
+# env
+WebApp/.env
+WebApp/.env.development
+WebApp/.env.production
+WebApp/.env.local
+WebApp/.env.development.local
+WebApp/.env.test.local
+WebApp/.env.production.local
+
+# log
+WebApp/npm-debug.log*
+WebApp/yarn-debug.log*
+WebApp/yarn-error.log*
+
+# firebase
+
+WebApp/.firebase
+WebApp/.firebaserc
