@@ -2,12 +2,13 @@ import * as firebase from "firebase/app";
 import "firebase/messaging";
 import "firebase/auth";
 import "firebase/functions";
+
 const config = {
-  apiKey: "AIzaSyBXagrD84VXx8OyHe7p1qrBfu_y5v1cql8",
-  authDomain: "ecopaymlr.firebaseapp.com",
-  projectId: "ecopaymlr",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: "ecopaymlr.appspot.com",
-  messagingSenderId: "362519129536",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
   appId: "1:362519129536:web:e085b88dbca315ff7aac25",
   measurementId: "G-LKVWK42PLC",
 };
