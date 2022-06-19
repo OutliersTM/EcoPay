@@ -3,12 +3,16 @@ from flask import Flask, request, jsonify
 import classify
 import base64
 import json
-import firebase
 import env
+from firebase_admin import credentials,firestore,initialize_app
 
 # Instantiate Flask
 app = Flask(__name__)
 
+# Initialize Firestore DB
+cred = credentials.Certificate('./ecopaymlr-firebase-adminsdk-cgt1f-cad84caba6.json')
+default_app = initialize_app(cred)
+db = firestore.client()
 
 # health check
 @app.route('/status')
@@ -38,10 +42,8 @@ def detect():
     response_data = result.json
     print(response_data)
     
-    db = firebase.Firebase()
-    db.authenticate()
-    db.push(response_data)
-    print("Updated Firebase.")
+    #need to find user id from the bin using key or fingerprint scanner
+    #doc_ref = db.collection(u"users").document(u'SF').set(response_data)
 
     return result
 

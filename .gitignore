@@ -137,3 +137,15 @@ WebApp/yarn-error.log*
 
 WebApp/.firebase
 WebApp/.firebaserc
+
+
+# dependencies
+camera/node_modules
+camera/.pnp
+camera/.pnp.js
+
+# testing
+camera/coverage
+
+# production
+camera/build

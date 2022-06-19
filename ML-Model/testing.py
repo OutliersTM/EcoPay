@@ -14,4 +14,3 @@ imagePath = filedialog.askopenfilename(title="Choose a file",
 result = classify.analyse(imagePath)
 
 print(result)
-
