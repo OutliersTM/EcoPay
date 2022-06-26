@@ -13,29 +13,27 @@ const Lander = (props) => {
       <H2>Hi there! 👋</H2>
       <P>
         <li>
-          Modern authentication and onboarding UI flows have already been built
-          out, it's as simple as plugging in your Firebase API keys.
-        </li>
-        <li>Mobile-ready responsive design.</li>
-        <li>
-          Utilizes Styled-Components, carefully using global variables that
-          allow you to quickly and easily adjust to your tastes.
+          The main objective of the project is to promote recycling and improve
+          solid waste management.
         </li>
         <li>
-          It's built entirely with React Hooks and the new Context API. Built on
-          top of Create-React-App.
+          Encourage people to recycle waste by rewarding them with credits.{" "}
         </li>
         <li>
-          Requires very few dependencies. The least popular module it uses has
-          6.4k stars on Github.
+          In the smart recycle bin, we have a process of identifying wastes into
+          different classes that are plastic, paper and trash (Here trash is
+          unrecognised waste or other than plastic and paper) with the help of
+          ML models built for identifying based on the training data.
         </li>
+        <li>
+          Our project can be implemented in several places to help improve the
+          way of life
+        </li>
+        <li>A. Waste Detection Scenario and Accuracy calculation</li>
         <li>
           Basic security rules have already been written for the Firestore DB.
         </li>
-        <li>
-          Push Notifications set up out of the box, with a cloud function
-          supplied for triggering messages.
-        </li>
+
         <li>Dark Mode! You gotta have dark mode!</li>
       </P>
       <Button onClick={signIn}>Take a Tour</Button>
