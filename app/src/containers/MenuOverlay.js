@@ -23,7 +23,7 @@ const MenuHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid ${props => props.theme.overlayDetail};
+  border-bottom: 1px solid ${(props) => props.theme.overlayDetail};
   @media (max-width: 480px) {
     display: none;
   }
@@ -52,8 +52,8 @@ const MenuItem = styled.button`
   position: relative;
   display: block;
   background-color: transparent;
-  color: ${props => (props.samePath ? props.theme.overlayDetail : "inherit")};
-  pointer-events: ${props => (props.samePath ? "none" : "initial")};
+  color: ${(props) => (props.samePath ? props.theme.overlayDetail : "inherit")};
+  pointer-events: ${(props) => (props.samePath ? "none" : "initial")};
   border: 0;
   margin-top: ${metrics.baseUnit * 3}px;
   height: ${metrics.baseUnit * 6}px;
@@ -90,7 +90,7 @@ const MenuItem = styled.button`
     opacity: 1;
     transform: translateY(0);
     transition: opacity 400ms linear 400ms, transform 400ms ease-out 400ms;
-    transition-delay: ${props => props.child * 0.2}s;
+    transition-delay: ${(props) => props.child * 0.2}s;
   }
   &.switch-appear,
   &.switch-enter {
@@ -100,11 +100,11 @@ const MenuItem = styled.button`
   &.switch-enter.switch-enter-active {
     opacity: 1;
     transition: opacity 400ms linear 400ms, transform 400ms ease-out 400ms;
-    transition-delay: ${props => props.child * 0.2}s;
+    transition-delay: ${(props) => props.child * 0.2}s;
   }
 `;
 
-const MenuOverlay = props => {
+const MenuOverlay = (props) => {
   const { userDispatch } = useContext(UserContext);
   const styleMode = window.localStorage.getItem("styleMode");
 
@@ -113,16 +113,16 @@ const MenuOverlay = props => {
     firebase.auth().signOut();
     userDispatch({
       type: "userId",
-      payload: null
+      payload: null,
     });
   };
 
-  const pushTo = path => {
+  const pushTo = (path) => {
     props.setMenuOpen();
     !samePath(path) && props.history.push(path);
   };
 
-  const samePath = path => {
+  const samePath = (path) => {
     return props.location.pathname === path;
   };
 
@@ -130,7 +130,7 @@ const MenuOverlay = props => {
     const newStyle = styleMode === "main" ? "dark" : "main";
     userDispatch({
       type: "styleMode",
-      payload: newStyle
+      payload: newStyle,
     });
     window.localStorage.setItem("styleMode", newStyle);
   };
@@ -165,8 +165,7 @@ const MenuOverlay = props => {
             <CSSTransition child={2} timeout={1000} classNames="fade">
               <MenuItem
                 onClick={() => {
-                  window.location.href =
-                    "http://github.com/eemebarbe/react-firebase-essentials";
+                  window.location.href = "http://github.com/OutliersTM/EcoPay";
                 }}
               >
                 Github

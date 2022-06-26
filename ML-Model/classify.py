@@ -24,14 +24,20 @@ def analyse(imageObj):
     with tf.Session() as sess:
         # Feed the image_data as input to the graph and get first prediction
         softmax_tensor = sess.graph.get_tensor_by_name('final_result:0')
+        print("Softmax",softmax_tensor)
         
         predictions = sess.run(softmax_tensor, \
                     {'DecodeJpeg/contents:0': image_data})
+        print("Predictions",predictions)
+        
         
         # Sort to show labels of first prediction in order of confidence
         top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
+        print("First Predictions",predictions[0])
+        
         obj = {}
         for node_id in top_k:
+            print(node_id)
             human_string = label_lines[node_id]
             score = predictions[0][node_id]
             obj[human_string] = float(score)

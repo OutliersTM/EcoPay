@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { P, H1, Button, Input, Form, BodyWrapper, H2 } from "../components";
 import { UserContext } from "../contexts/userContext";
 import { ToastContext } from "../contexts/toastContext";
@@ -8,6 +8,7 @@ import ButtonWithLoadState from "../components/Button";
 import Card from "../components/Card";
 import plastic from "../themes/icons/plastic_480.png";
 import metal from "../themes/icons/metal_400px.png";
+import paper from "../themes/icons/paper.png";
 import cardboard from "../themes/icons/cardboard_box_480px.png";
 import glass from "../themes/icons/fragile_480px.png";
 import Flexrow from "../components/Flexrow";
@@ -20,7 +21,17 @@ const Dashboard = () => {
   const [moreInfoComplete, setMoreInfoComplete] = useState(false);
   const { userState, userDispatch } = useContext(UserContext);
   const { sendMessage } = useContext(ToastContext);
+  const [wastes, setWastes] = useState([]);
+  const [totalRewards, setTotalRewards] = useState(0);
   const db = firebase.firestore();
+  const [categories, setCategories] = useState({
+    plastic: 0,
+    metal: 0,
+    cardboard: 0,
+    glass: 0,
+    trash: 0,
+    paper: 0,
+  });
 
   useEffect(() => {
     if (
@@ -31,6 +42,50 @@ const Dashboard = () => {
       requestNotifications();
     }
   }, []);
+
+  const getFucn = useCallback(async () => {
+    const temp = [];
+    const d = await db
+      .collection("users")
+      .doc(userState.userId)
+      .collection("wastes")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          temp.push(doc.data());
+        });
+      });
+
+    setWastes(temp);
+    setTotalRewards((pr) => {
+      let total = 0;
+      temp.forEach((waste) => {
+        let c = parseFloat(waste.reward);
+        total += c;
+      });
+      return total.toFixed(2);
+    });
+    setCategories((pr) => {
+      let cat = {
+        plastic: 0,
+        metal: 0,
+        cardboard: 0,
+        glass: 0,
+        trash: 0,
+        paper: 0,
+      };
+      temp.forEach((waste) => {
+        let m = waste.material;
+        let c = parseFloat(waste.reward);
+        cat[m] += c;
+      });
+      return cat;
+    });
+  }, [userState.userId]);
+
+  useEffect(() => {
+    getFucn();
+  }, [getFucn]);
 
   const requestNotifications = () => {
     Notification.requestPermission().then((permission) => {
@@ -120,7 +175,8 @@ const Dashboard = () => {
     return (
       <BodyWrapper>
         <H1>Dashboard</H1>
-        <H2>Wallet : ₹1550</H2>
+
+        <H2>Wallet : ₹{String(totalRewards).replace("NaN", "")}</H2>
         <H2>
           <div
             style={{
@@ -134,55 +190,49 @@ const Dashboard = () => {
             <ButtonWithLoadState>Withdraw From Wallet</ButtonWithLoadState>
           </div>
         </H2>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <ButtonOutlined>Daily</ButtonOutlined>
-          <ButtonOutlined>Weekly</ButtonOutlined>
-          <ButtonOutlined>Monthly</ButtonOutlined>
-        </div>
+
         <br />
         <br />
         <Grid>
-          <Card>
-            <img src={plastic} width={"55%"} height={"auto"} />
-            <Flexrow>
-              <H2>Plastic</H2>
-              <H2>₹200</H2>
-            </Flexrow>
-          </Card>
-          <Card>
-            <img src={metal} width={"55%"} height={"auto"} />
-            <Flexrow>
-              <H2>Metal</H2>
-              <H2>₹700</H2>
-            </Flexrow>
-          </Card>
-          <Card>
-            <img src={cardboard} width={"55%"} height={"auto"} />
-            <Flexrow>
-              <H2>Cardboard</H2>
-              <H2>₹100</H2>
-            </Flexrow>
-          </Card>
-          <Card>
-            <img src={glass} width={"55%"} height={"auto"} />
-            <Flexrow>
-              <H2>Glass</H2>
-              <H2>₹100</H2>
-            </Flexrow>
-          </Card>
-          <Card>
-            <img src={trash} width={"55%"} height={"auto"} />
-            <Flexrow>
-              <H2>Trash</H2>
-              <H2>₹450</H2>
-            </Flexrow>
-          </Card>
+          {Object.keys(categories).map((key) => {
+            return (
+              <Card>
+                <img
+                  src={
+                    key === "plastic"
+                      ? plastic
+                      : key === "metal"
+                      ? metal
+                      : key === "cardboard"
+                      ? cardboard
+                      : key === "glass"
+                      ? glass
+                      : key === "paper"
+                      ? paper
+                      : key === "trash"
+                      ? trash
+                      : null
+                  }
+                  width={"55%"}
+                  height={"auto"}
+                />
+                <Flexrow>
+                  <H2>{key}</H2>
+                  <H2>₹{categories[key].toFixed(2)}</H2>
+                </Flexrow>
+              </Card>
+            );
+          })}
+        </Grid>
+        <H1>Images</H1>
+        <Grid>
+          {wastes.map((waste) => {
+            return (
+              <Card>
+                <img src={waste.image} width={"100%"} height={"auto"} />
+              </Card>
+            );
+          })}
         </Grid>
       </BodyWrapper>
     );

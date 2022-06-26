@@ -4,15 +4,21 @@ import classify
 import base64
 import json
 import env
-from firebase_admin import credentials,firestore,initialize_app
+from firebase_admin import credentials,firestore,initialize_app,storage
+from firebase_admin.firestore import SERVER_TIMESTAMP
+import time
 
 # Instantiate Flask
 app = Flask(__name__)
 
 # Initialize Firestore DB
 cred = credentials.Certificate('./ecopaymlr-firebase-adminsdk-cgt1f-cad84caba6.json')
-default_app = initialize_app(cred)
+default_app = initialize_app(cred,{
+    'storageBucket': 'ecopaymlr.appspot.com'
+})
 db = firestore.client()
+bucket = storage.bucket()
+bucket = storage.bucket("ecopaymlr.appspot.com",default_app)
 
 # health check
 @app.route('/status')
@@ -34,6 +40,7 @@ def detect():
     
     # Pass image bytes to classifier
     result = classify.analyse("temp.png")
+    img = open("temp.png", "rb")
 
     # Return results as neat JSON object, using 
     result = jsonify(result)
@@ -43,8 +50,31 @@ def detect():
     print(response_data)
     
     #need to find user id from the bin using key or fingerprint scanner
-    #doc_ref = db.collection(u"users").document(u'SF').set(response_data)
-
+    # add resposnse data to firestore database
+    m_result = 0
+    m_material = ""
+    
+    ts = time.time()
+    
+    for key in response_data:
+        if response_data[key] > m_result:
+            m_result = response_data[key]
+            m_material = key
+    
+    blob = bucket.blob("images/"+str(ts)+".png")
+    blob.upload_from_file(img, content_type='image/png')
+    time.sleep(1)
+    blob.make_public()
+    p_url = blob.public_url
+    db.collection(u"users").document(u'f2aO8nuPhoORfUFlbYsPL5B0CB52').collection(u"wastes").add({
+        u'pred':response_data,
+        u'timestamp':SERVER_TIMESTAMP,
+        u'reward':m_result*10,
+        u'material':m_material,
+        u'image':p_url
+    })
+    
+    
     return result
 
 if __name__ == '__main__':
