@@ -4,11 +4,11 @@ import "firebase/auth";
 import "firebase/functions";
 
 const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  apiKey: "AIzaSyBXagrD84VXx8OyHe7p1qrBfu_y5v1cql8",
+  authDomain: "ecopaymlr.firebaseapp.com",
+  projectId: "ecopaymlr",
   storageBucket: "ecopaymlr.appspot.com",
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
+  messagingSenderId: "362519129536",
   appId: "1:362519129536:web:e085b88dbca315ff7aac25",
   measurementId: "G-LKVWK42PLC",
 };
@@ -16,7 +16,7 @@ firebase.initializeApp(config);
 
 if ("Notification" in window) {
   const messaging = firebase.messaging();
-  messaging.usePublicVapidKey(process.env.REACT_APP_FIREBASE_MESSAGING_CERT);
+  messaging.usePublicVapidKey("G-LKVWK42PLC");
 
   messaging.onMessage((payload) => {
     console.log("Message received. ", payload);
