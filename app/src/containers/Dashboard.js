@@ -14,6 +14,7 @@ import glass from "../themes/icons/fragile_480px.png";
 import Flexrow from "../components/Flexrow";
 import Grid from "../components/Grid";
 import trash from "../themes/icons/trash_480px.png";
+import HorizontalScroll from "react-horizontal-scrolling";
 import ButtonOutlined from "../components/ButtonOutlined";
 const Dashboard = () => {
   const [firstName, setFirstName] = useState(null);
@@ -31,6 +32,14 @@ const Dashboard = () => {
     glass: 0,
     trash: 0,
     paper: 0,
+  });
+  const [images, setImages] = useState({
+    plastic: [],
+    metal: [],
+    cardboard: [],
+    glass: [],
+    trash: [],
+    paper: [],
   });
 
   useEffect(() => {
@@ -65,22 +74,30 @@ const Dashboard = () => {
       });
       return total.toFixed(2);
     });
-    setCategories((pr) => {
-      let cat = {
-        plastic: 0,
-        metal: 0,
-        cardboard: 0,
-        glass: 0,
-        trash: 0,
-        paper: 0,
-      };
-      temp.forEach((waste) => {
-        let m = waste.material;
-        let c = parseFloat(waste.reward);
-        cat[m] += c;
-      });
-      return cat;
+    let cat = {
+      plastic: 0,
+      metal: 0,
+      cardboard: 0,
+      glass: 0,
+      trash: 0,
+      paper: 0,
+    };
+    let im = {
+      plastic: [],
+      metal: [],
+      cardboard: [],
+      glass: [],
+      trash: [],
+      paper: [],
+    };
+    temp.forEach((waste) => {
+      let m = waste.material;
+      let c = parseFloat(waste.reward);
+      im[waste.material].push(waste.image);
+      cat[m] += c;
     });
+    setCategories(cat);
+    setImages(im);
   }, [userState.userId]);
 
   useEffect(() => {
@@ -225,13 +242,27 @@ const Dashboard = () => {
           })}
         </Grid>
         <H1>Images</H1>
+        {console.log(images)}
         <Grid>
-          {wastes.map((waste) => {
-            return (
-              <Card>
-                <img src={waste.image} width={"100%"} height={"auto"} />
-              </Card>
-            );
+          {Object.keys(images).map((key) => {
+            return images[key].map((im, index) => {
+              return (
+                <div>
+                  {index === 0 && <H2>{key}</H2>}
+                  <HorizontalScroll>
+                    <Card>
+                      <img
+                        alt="waste"
+                        src={im}
+                        width={"100%"}
+                        height={"auto"}
+                        style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
+                      />
+                    </Card>
+                  </HorizontalScroll>
+                </div>
+              );
+            });
           })}
         </Grid>
       </BodyWrapper>

@@ -105,6 +105,8 @@ ML-Model//site
 
 # mypy
 ML-Model/.mypy_cache/
+ML-Model/dataset-original.zip
+ML-Model/dataset-original
 
 # web app stuff
 # dependencies
