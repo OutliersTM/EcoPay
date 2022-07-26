@@ -58,7 +58,7 @@ const Dashboard = () => {
       .collection("users")
       .doc(userState.userId)
       .collection("wastes")
-      .orderBy("timestamp", "asc")
+      .orderBy("timestamp", "desc")
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
