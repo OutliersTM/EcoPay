@@ -58,6 +58,7 @@ const Dashboard = () => {
       .collection("users")
       .doc(userState.userId)
       .collection("wastes")
+      .orderBy("timestamp", "asc")
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
@@ -93,11 +94,9 @@ const Dashboard = () => {
     temp.forEach((waste) => {
       let m = waste.material;
       let c = parseFloat(waste.reward);
-      im[waste.material].push(waste.image);
       cat[m] += c;
     });
     setCategories(cat);
-    setImages(im);
   }, [userState.userId]);
 
   useEffect(() => {
@@ -242,28 +241,19 @@ const Dashboard = () => {
           })}
         </Grid>
         <H1>Images</H1>
-        {console.log(images)}
+
         <Grid>
-          {Object.keys(images).map((key) => {
-            return images[key].map((im, index) => {
-              return (
-                <div>
-                  {index === 0 && <H2>{key}</H2>}
-                  <HorizontalScroll>
-                    <Card>
-                      <img
-                        alt="waste"
-                        src={im}
-                        width={"100%"}
-                        height={"auto"}
-                        style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
-                      />
-                    </Card>
-                  </HorizontalScroll>
-                </div>
-              );
-            });
-          })}
+          {wastes.map((key) => 
+               <Card>
+               <img
+                 alt="waste"
+                 src={key.image}
+                 width={"100%"}
+                 height={"auto"}
+                 style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
+               />
+             </Card>
+          )}
         </Grid>
       </BodyWrapper>
     );
